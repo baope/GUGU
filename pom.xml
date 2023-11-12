@@ -11,6 +11,10 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>cwj-coupon</module>
+    <module>cwj-member</module>
+    <module>cwj-order</module>
+    <module>cwj-product</module>
+    <module>cwj-ware</module>
   </modules>
 
   <name>Maven</name>
