@@ -6,7 +6,7 @@
 
     <parent>
         <artifactId>spring_cloud</artifactId>
-        <groupId>org.example</groupId>
+        <groupId>org.cwj</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -15,27 +15,12 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
-        <!--SpringCloud ailibaba nacos -->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <groupId>org.cwj</groupId>
+            <artifactId>cwj-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!--SpringCloud ailibaba sentinel-datasource-nacos 后续sentinel做持久化用到-->
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-datasource-nacos</artifactId>
-        </dependency>
-        <!--SpringCloud ailibaba sentinel -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-        </dependency>
-        <!--openfeign-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <!-- SpringBoot整合Web组件+actuator -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -44,21 +29,8 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>4.6.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
+
 
     </dependencies>
 
