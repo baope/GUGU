@@ -5,44 +5,31 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @Description:
- * @Created: with IntelliJ IDEA.
- * @author: 夏沫止水
- * @createTime: 2020-05-27 17:54
- **/
-public class ListValueConstraintValidator implements ConstraintValidator<ListValue,Integer> {
+
+
+public class ListValueConstraintValidator implements ConstraintValidator<MyListValue,Integer> {
 
     private Set<Integer> set = new HashSet<>();
 
-    /**
-     * 初始化方法
-     * @param constraintAnnotation
-     */
-    @Override
     public void initialize(ListValue constraintAnnotation) {
-
-        int[] vals = constraintAnnotation.vals();
-
-        for (int val : vals) {
-            set.add(val);
+        /**
+         * 设置的合法的信息
+         */
+        int valid[] = constraintAnnotation.vals();
+        for(int i : valid){
+            set.add(i);
         }
-
     }
 
     /**
-     * 判断是否效验成功
-     * @param value 需要效验的值
+     * value 代表获取的值
+     * @param value
      * @param context
      * @return
      */
     @Override
     public boolean isValid(Integer value, ConstraintValidatorContext context) {
-
-        //判断是否有包含的值
-        boolean contains = set.contains(value);
-
-        return contains;
+        return set.contains(value);
     }
 
 }

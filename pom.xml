@@ -18,6 +18,8 @@
     <module>renren-fast</module>
     <module>renren-generator</module>
     <module>cwj-common</module>
+      <module>cwj-gateway</module>
+      <module>cwj-thirdport</module>
   </modules>
 
   <name>Maven</name>

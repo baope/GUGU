@@ -1,0 +1,23 @@
+server:
+  port: 9999
+
+
+spring:
+  application:
+    name: thirdport
+  cloud:
+    alicloud:
+      access-key: LTAI5t7c1KyAw2DnZeeTpaTP
+      secret-key: ikmnaZxBJHJnfS1YQulEyRBR7yrIxN
+      oss:
+        endpoint: oss-cn-beijing.aliyuncs.com
+        bucket: baopemall
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        namespace: 3ad1abc4-ba18-4ff9-b235-b6b23a1a49c6
+        server-addr: 127.0.0.1:8848
+
+
+
