@@ -1,0 +1,22 @@
+server:
+  port: 11000
+
+spring:
+  application:
+    name: product
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080 #配置Sentinel dashboard地址
+        port: 8719
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        namespace: 0ed5738c-18f4-4d21-9ef5-508fc18f8dfa
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        ext-config[0]:
+          data-id: product-database.yaml
+          refresh: true
+
