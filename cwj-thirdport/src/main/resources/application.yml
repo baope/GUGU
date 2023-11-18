@@ -7,8 +7,6 @@ spring:
     name: thirdport
   cloud:
     alicloud:
-      access-key: LTAI5t7c1KyAw2DnZeeTpaTP
-      secret-key: ikmnaZxBJHJnfS1YQulEyRBR7yrIxN
       oss:
         endpoint: oss-cn-beijing.aliyuncs.com
         bucket: baopemall
