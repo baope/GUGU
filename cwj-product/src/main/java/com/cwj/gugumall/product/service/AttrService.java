@@ -3,8 +3,10 @@ package com.cwj.gugumall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cwj.common.utils.PageUtils;
 import com.cwj.gugumall.product.entity.AttrEntity;
+import com.cwj.gugumall.product.vo.AttrrespVo;
 import com.cwj.gugumall.product.vo.Attrvo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +22,12 @@ public interface AttrService extends IService<AttrEntity> {
 
     void saveAttr(Attrvo attr);
 
-    PageUtils  queryBaseAttrPage(Map<String, Object> params, Long catelogId);
+    PageUtils  queryBaseAttrPage(Map<String, Object> params, Long catelogId,String type);
+
+    AttrrespVo getAttrrespVo(Long attrId);
+
+    void updateAttrvo(Attrvo attr);
+
+    List<AttrEntity> getRelationAttr(Long attrgroupId);
 }
 

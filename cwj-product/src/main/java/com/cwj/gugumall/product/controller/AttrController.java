@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 
+import com.cwj.gugumall.product.vo.AttrrespVo;
 import com.cwj.gugumall.product.vo.Attrvo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,9 +33,18 @@ public class AttrController {
     @Autowired
     private AttrService attrService;
 
-    @RequestMapping("/base/list/{catelogId}")
-    public R baselist(@RequestParam Map<String, Object> params,@PathVariable Long catelogId){
-        PageUtils page = attrService.queryBaseAttrPage(params,catelogId);
+    /**
+     * 查询列表，显示表的所有数据
+     * @param params
+     * @param catelogId
+     * @param type
+     * @return
+     */
+    // /base & /sale
+    @RequestMapping("/{attrType}/list/{catelogId}")
+    public R baselist(@RequestParam Map<String, Object> params,@PathVariable Long catelogId,
+                      @PathVariable("attrType")  String type){
+        PageUtils page = attrService.queryBaseAttrPage(params,catelogId,type);
         return R.ok().put("page", page);
     }
 
@@ -54,9 +64,8 @@ public class AttrController {
      */
     @RequestMapping("/info/{attrId}")
     public R info(@PathVariable("attrId") Long attrId){
-		AttrEntity attr = attrService.getById(attrId);
-
-        return R.ok().put("attr", attr);
+        AttrrespVo attrrespVo = attrService.getAttrrespVo(attrId);
+        return R.ok().put("attr", attrrespVo);
     }
 
     /**
@@ -72,8 +81,8 @@ public class AttrController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody AttrEntity attr){
-		attrService.updateById(attr);
+    public R update(@RequestBody Attrvo attr){
+		attrService.updateAttrvo(attr);
 
         return R.ok();
     }

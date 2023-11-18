@@ -7,4 +7,5 @@ import lombok.Data;
 public class AttrrespVo  extends Attrvo{
     private String groupName;
     private String catelogName;
+    private Long[] catelogPath;
 }
