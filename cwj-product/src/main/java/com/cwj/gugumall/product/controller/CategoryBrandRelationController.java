@@ -3,14 +3,13 @@ package com.cwj.gugumall.product.controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
+import com.cwj.gugumall.product.entity.BrandEntity;
+import com.cwj.gugumall.product.vo.BrandVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cwj.gugumall.product.entity.CategoryBrandRelationEntity;
 import com.cwj.gugumall.product.service.CategoryBrandRelationService;
@@ -32,6 +31,18 @@ public class CategoryBrandRelationController {
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
 
+    @GetMapping("/brands/list")
+    public R relationBrandsList(@RequestParam(value = "catId") Long catId){
+        List<BrandEntity> brandEntities = categoryBrandRelationService.getBrandsByCatId(catId);
+        List<BrandVo> brandVos = brandEntities.stream().map(
+                (obj)->{
+                    BrandVo brandVo = new BrandVo(obj);
+                    return brandVo;
+                }
+        ).collect(Collectors.toList());
+        brandVos.forEach(obj-> System.out.println(obj.toString()));
+        return R.ok().put("data",brandVos);
+    }
     /**
      * 列表
      */

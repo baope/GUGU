@@ -2,9 +2,7 @@ package com.cwj.gugumall.product.service.impl;
 
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.cwj.common.constant.AuthServerConstant;
 import com.cwj.common.constant.ProductConstant;
-import com.cwj.gugumall.product.dao.AttrAttrgroupRelationDao;
 import com.cwj.gugumall.product.entity.*;
 import com.cwj.gugumall.product.service.AttrAttrgroupRelationService;
 import com.cwj.gugumall.product.service.AttrGroupService;
@@ -13,12 +11,10 @@ import com.cwj.gugumall.product.vo.AttrrespVo;
 import com.cwj.gugumall.product.vo.Attrvo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -46,6 +42,60 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
 //    @Autowired
 //    AttrAttrgroupRelationDao attrAttrgroupRelationDao;
+
+    /**
+     * 获取组外的没有关联的属性
+     * @param attrgroupId
+     * @return
+     */
+    public PageUtils getNoRelationAttr(Long attrgroupId,Map<String,Object> parms)
+    {
+        /**
+         * 获取分类
+         */
+        AttrGroupEntity attrGroupEntity = attrGroupService.getOne(new QueryWrapper<AttrGroupEntity>()
+                .eq("attr_group_id",attrgroupId));
+        Long catelogId = attrGroupEntity.getCatelogId();
+
+        /**
+         * 获取该类下的其他分组的属性id
+         */
+        List<Long> attrGroupIds = attrGroupService.list(new QueryWrapper<AttrGroupEntity>()
+        .eq("catelog_id",catelogId)).stream().map(
+                (obj)->{
+                    return obj.getAttrGroupId();
+                }
+        ).collect(Collectors.toList());
+        List<AttrAttrgroupRelationEntity> attrGroupEntityList = attrAttrgroupRelationService.list(new QueryWrapper<AttrAttrgroupRelationEntity>()
+                .in("attr_group_id",attrGroupIds));
+        List<Long> attrIdlist = attrGroupEntityList.stream().map(
+                (obj)->{
+                    return obj.getAttrId();
+                }
+        ).collect(Collectors.toList());
+
+        /**
+         * 获取该分类下的属性
+         */
+
+        QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<AttrEntity>().
+                eq("catelog_id",catelogId).eq("attr_type",ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode());
+        String key = (String) parms.get("key");
+        if(!StringUtil.isBlank(key))
+        {
+            queryWrapper.like("attr_name",key);
+        }
+
+        /**
+         * 该分组中可以有的属性
+         */
+        if(attrIdlist.size() > 0)
+        {
+            queryWrapper.notIn("attr_id",attrIdlist);
+        }
+        IPage<AttrEntity> iPage = page(new Query<AttrEntity>().getPage(parms),queryWrapper);
+        return new PageUtils(iPage);
+    }
 
     /**
      * 获取属性分组中的属性

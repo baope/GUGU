@@ -2,14 +2,18 @@ server:
   port: 9000
 
 spring:
+  application:
+    name: member
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        namespace: 7a2268a0-cb39-4474-b174-53b3b1e7e887
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
   datasource:
     username: root
     password: root
     url: jdbc:mysql://192.168.126.130:3306/cwj_ums?useUnicode=true&characterEncoding=utf-8&useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
-
-mybatis-plus:
-  mapper-locations: classpath*:/mapper/**/*.xml
-  global-config:
-    db-config:
-      id-type: auto

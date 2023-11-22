@@ -2,6 +2,16 @@ server:
   port: 12000
 
 spring:
+  application:
+    name: ware
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        namespace: 7a84a237-d503-4f05-9259-c81c328a8163
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
   datasource:
     username: root
     password: root

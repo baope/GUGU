@@ -1,17 +1,16 @@
 package com.cwj.gugumall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
+import com.cwj.gugumall.product.entity.ProductAttrValueEntity;
+import com.cwj.gugumall.product.service.ProductAttrValueService;
 import com.cwj.gugumall.product.vo.AttrrespVo;
 import com.cwj.gugumall.product.vo.Attrvo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cwj.gugumall.product.entity.AttrEntity;
 import com.cwj.gugumall.product.service.AttrService;
@@ -33,6 +32,31 @@ public class AttrController {
     @Autowired
     private AttrService attrService;
 
+    @Autowired
+    private ProductAttrValueService productAttrValueService;
+
+    @PostMapping("/update/{spuId}")
+    public R updateSpuAttr(@PathVariable("spuId") Long spuId,
+                            @RequestBody List<ProductAttrValueEntity> entities)
+    {
+        productAttrValueService.updateBatchsByspuId(spuId,entities);
+        return R.ok();
+    }
+
+
+    /**
+     * 获取spu的属性
+     * Request URL: http://localhost:88/api/product/attr/base/listforspu/13
+     * @param spuId
+     * @return
+     */
+    @GetMapping("/base/listforspu/{spuid}")
+    public R baseAttrlistforspu(@PathVariable("spuid") Long spuId)
+    {
+        List<ProductAttrValueEntity> entityList = productAttrValueService.baseAttrListforSpu(spuId);
+        return R.ok().put("data",entityList);
+    }
+
     /**
      * 查询列表，显示表的所有数据
      * @param params
@@ -40,7 +64,6 @@ public class AttrController {
      * @param type
      * @return
      */
-    // /base & /sale
     @RequestMapping("/{attrType}/list/{catelogId}")
     public R baselist(@RequestParam Map<String, Object> params,@PathVariable Long catelogId,
                       @PathVariable("attrType")  String type){

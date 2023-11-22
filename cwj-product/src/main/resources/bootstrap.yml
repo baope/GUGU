@@ -1,7 +1,11 @@
 server:
   port: 11000
 
+
+
 spring:
+  jackson:
+    dateFormat: yyyy-MM-dd HH-mm-ss
   application:
     name: product
   cloud:

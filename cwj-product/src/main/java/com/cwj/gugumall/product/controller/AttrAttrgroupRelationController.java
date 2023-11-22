@@ -16,7 +16,13 @@ import com.cwj.gugumall.product.service.AttrAttrgroupRelationService;
 import com.cwj.common.utils.PageUtils;
 import com.cwj.common.utils.R;
 
-
+/**
+ * 一个类对应多个分组，多个属性
+ * 一个分组有多个属性
+ * 一个属性对应一个类
+ * 属性不能被一个类下的多个分组拥有
+ * 此时属性和分组为一对一关系，这个关系集是没有必要的
+ */
 
 /**
  * 属性&属性分组关联

@@ -11,9 +11,9 @@ import lombok.Data;
 /**
  * 商品阶梯价格
  * 
- * @author cwj
- * @email baope.ans@gmail.com
- * @date 2023-11-14 02:36:17
+ * @author leifengyang
+ * @email leifengyang@gmail.com
+ * @date 2019-10-08 09:36:40
  */
 @Data
 @TableName("sms_sku_ladder")

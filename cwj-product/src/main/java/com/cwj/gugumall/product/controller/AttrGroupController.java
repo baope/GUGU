@@ -7,8 +7,10 @@ import java.util.Map;
 
 import com.cwj.gugumall.product.entity.AttrAttrgroupRelationEntity;
 import com.cwj.gugumall.product.entity.AttrEntity;
+import com.cwj.gugumall.product.service.AttrAttrgroupRelationService;
 import com.cwj.gugumall.product.service.AttrService;
 import com.cwj.gugumall.product.service.CategoryService;
+import com.cwj.gugumall.product.vo.AttrGroupWithAttrsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +40,52 @@ public class AttrGroupController {
     @Autowired
     private AttrService attrService;
 
+    @Autowired
+    private AttrAttrgroupRelationService attrAttrgroupRelationService;
+
+    /**
+     * 查询类内所有分组中的所有属性
+     * @param catlogId
+     * @return
+     */
+    @GetMapping("/{catelogId}/withattr")
+    public R getAttrGroupAttrs(@PathVariable("catelogId") Long catlogId){
+        List<AttrGroupWithAttrsVo> vos = attrGroupService.getAttrGroupWithAttrsByCatlogId(catlogId);
+        return R.ok().put("data",vos);
+    }
+
+
+    /**
+     * 添加attr和attrgroup关系
+     * @param attrAttrgroupRelationEntities
+     * @return
+     */
+    @PostMapping("/attr/relation")
+    public R addRelation(@RequestBody List<AttrAttrgroupRelationEntity> attrAttrgroupRelationEntities){
+        attrAttrgroupRelationService.addRelation(attrAttrgroupRelationEntities);
+        return R.ok();
+    }
+
+    /**
+     * 获取组中没有的属性
+     * @param attrgroupId
+     * @param parms
+     * @return
+     */
+    @GetMapping("/{attrgroupId}/noattr/relation")
+    public R attrNoRelation(@PathVariable("attrgroupId") Long attrgroupId,
+                            @RequestParam Map<String,Object> parms)
+    {
+        PageUtils page = attrService.getNoRelationAttr(attrgroupId,parms);
+        return R.ok().put("page",page);
+    }
+
+
+    /**
+     * 删除关联表中的属性组中的属性
+     * @param attrAttrgroupRelationEntity
+     * @return
+     */
     @PostMapping("attr/relation/delete")
     public R deleteRelation(@RequestBody AttrAttrgroupRelationEntity[] attrAttrgroupRelationEntity)
     {
